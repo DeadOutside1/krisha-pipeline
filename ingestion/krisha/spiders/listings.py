@@ -52,6 +52,7 @@ class ListingsSpider(scrapy.Spider):
             date_str = str(stats[1]).strip() if len(stats) > 1 else ""
             pub_date = self.parse_date(date_str)
 
+
             # Если дата старше сегодня — стопаем
             if pub_date and pub_date < today:
                 stop_crawling = True
@@ -69,7 +70,7 @@ class ListingsSpider(scrapy.Spider):
             }
 
         # Идём на следующую страницу только если не встретили старые объявления
-        next_page = response.css("a.paginator-btn-next::attr(href)").get()
+        next_page = response.css("a.paginator__btn--next::attr(href)").get()
         if next_page and not stop_crawling:
             yield response.follow(
                 next_page,
